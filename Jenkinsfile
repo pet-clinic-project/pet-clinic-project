@@ -38,6 +38,9 @@ pipeline {
             }
         }
         stage('Upload to Nexus') {
+            when {
+                branch 'main'
+            }
             steps {
                 script {
                     nexusUpload(
