@@ -1,15 +1,15 @@
 @Library('jenkins-shared-library@develop') _
 
-def awsRegion = "us-west-2"
-def imageName = "java_application"
-def versionTag = "1.0.0"
 def emailRecipient = "aswin@crunchops.com"
 def gitUrl = "https://github.com/spring-projects/spring-petclinic.git"
 def gitBranch = "main"
 
 pipeline {
     agent {
-        docker { image '814200988517.dkr.ecr.us-west-2.amazonaws.com/base-image:docker-base-image-1.0.1' }
+        docker {
+            image '814200988517.dkr.ecr.us-west-2.amazonaws.com/base-image:java-jdk-17-agent-1.0.22'
+            args '-v $HOME/.m2:/root/.m2 -u root'
+            }
     }
 
     stages {
