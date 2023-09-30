@@ -9,7 +9,7 @@ def gitBranch = "main"
 
 pipeline {
     agent {
-        docker { image '814200988517.dkr.ecr.us-west-2.amazonaws.com/base-image:1.0.0' }
+        docker { image '814200988517.dkr.ecr.us-west-2.amazonaws.com/base-image:docker-base-image-1.0.1' }
     }
 
     stages {
@@ -42,17 +42,6 @@ pipeline {
                 }
             }
         }
-        stage('Upload to Nexus') {
-            steps {
-                script {
-                    nexusUpload(
-                        'http://34.217.101.50:8081',
-                        'repository/maven-releases/jarfile/pet-clinic/' + versionTag,
-                        'NEXUS_CRED',
-                        'pet-clinic-' + versionTag + '.jar')
-                    }
-                }
-            }
     }
     post {
         always {
