@@ -1,9 +1,5 @@
 @Library('jenkins-shared-library@develop') _
 
-def emailRecipient = "aswin@crunchops.com"
-def gitUrl = "https://github.com/spring-projects/spring-petclinic.git"
-def gitBranch = "main"
-
 pipeline {
     agent {
         docker {
@@ -17,8 +13,8 @@ pipeline {
             steps {
                 script {
                     def config = [
-                        gitUrl: "${gitUrl}",
-                        branch: "${gitBranch}",
+                        gitUrl: "https://github.com/spring-projects/spring-petclinic.git",
+                        branch: "main",
                     ]
                     gitCheckout.call(config)
                 }
@@ -42,6 +38,16 @@ pipeline {
                 }
             }
         }
+        stage('Upload to Nexus') {
+            steps {
+                script {
+                    nexusUpload(
+                        "repository/maven-releases/jarfile/pet-clinic/1.0.${BUILD_NUMBER}",
+                        "NEXUS_CRED",
+                        "pet-clinic-1.0.${BUILD_NUMBER}.jar")
+                    }
+                }
+            }
     }
     post {
         always {
