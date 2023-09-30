@@ -31,10 +31,9 @@ pipeline {
             steps {
                 script {
                     sonarScan(
-                        'sonarqube-petclinic_java-application',
-                        'sonarqube-petclinic',
-                        'https://sonarcloud.io',
-                        'SONAR_TOKEN')
+                        projectKey: 'sonarqube-petclinic_java-application',
+                        organization: 'sonarqube-petclinic',
+                        sonarTokenCredentialId: 'SONAR_TOKEN')
                 }
             }
         }
@@ -42,9 +41,9 @@ pipeline {
             steps {
                 script {
                     nexusUpload(
-                        "repository/maven-releases/jarfile/pet-clinic/1.0.${BUILD_NUMBER}",
-                        "NEXUS_CRED",
-                        "pet-clinic-1.0.${BUILD_NUMBER}.jar")
+                        nexusRepository: "repository/maven-releases/jarfile/pet-clinic/1.0.${BUILD_NUMBER}",
+                        nexusCredentialsId: "NEXUS_CRED",
+                        jarFileName: "pet-clinic-1.0.${BUILD_NUMBER}.jar")
                     }
                 }
             }
