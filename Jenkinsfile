@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     def config = [
-                        gitUrl: "https://github.com/spring-projects/spring-petclinic.git",
+                        gitUrl: "https://github.com/pet-clinic-project/pet-clinic-app.git",
                         branch: "main",
                     ]
                     gitCheckout.call(config)
