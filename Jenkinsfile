@@ -23,7 +23,14 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    mvnBuild()
+                    maven.build()
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    maven.test()
                 }
             }
         }
